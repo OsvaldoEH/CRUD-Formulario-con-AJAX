@@ -3,18 +3,26 @@ require_once '../../includes/database/conexion.php';
 
 header('Content-Type: application/json');
 
-$claveProducto  = $_POST['claveProducto']  ?? '';
+$claveProducto = (int) ($_POST['claveProducto'] ?? 0);
 $nombreProducto = $_POST['nombreProducto'] ?? '';
-$precioProducto = $_POST['precioProducto'] ?? 0;
-$descripcion    = $_POST['descripcion']    ?? '';
+$precioProducto = (float) ($_POST['precioProducto'] ?? 0);
+$descripcion = $_POST['descripcion'] ?? '';
+
+if ($claveProducto === 0) {
+    echo json_encode(['success' => false, 'message' => 'Clave de producto inválida']);
+    exit;
+}
 
 $stmt = $conexion->prepare(
-    "UPDATE productos SET nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?"
+    "UPDATE productos SET claveProducto=?, nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?"
 );
-$stmt->bind_param("sdss", $nombreProducto, $precioProducto, $descripcion, $claveProducto);
+$stmt->bind_param("isdsi", $claveProducto, $nombreProducto, $precioProducto, $descripcion, $claveProducto);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => '✅ Producto actualizado exitosamente']);
+    $result = $conexion->query("SELECT claveProducto, nombreProducto, precioProducto, descripcion FROM productos");
+    $productos = [];
+    while ($fila = $result->fetch_assoc()) $productos[] = $fila;
+    echo json_encode(['success' => true, 'message' => '✅ Producto actualizado', 'productos' => $productos]);
 } else {
     echo json_encode(['success' => false, 'message' => '❌ Error al actualizar: ' . $stmt->error]);
 }
