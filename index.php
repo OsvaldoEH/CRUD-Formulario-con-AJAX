@@ -18,8 +18,8 @@ $productos = obtenerProductos($conexion);
 
 <body>
     <div class="header">
-        <h1 class="fw-bold">Sistema CRUD de Productos</h1>
-        <p class="mb-0">Gestión de inventario</p>
+        <h1 class="fw-bold">CRUD de Productos</h1>
+        <p class="mb-0">Sistema de gestion de inventario</p>
     </div>
 
     <div class="container">
@@ -59,20 +59,19 @@ $productos = obtenerProductos($conexion);
                                 <td><?php echo $producto['precioProducto']; ?></td>
                                 <td><?php echo $producto['descripcion']; ?></td>
                                 <td>
-                                    <button type="button"
-                                        class="btn btn-sm btn-warning btn-edit" 
+                                    <button type="button" class="btn btn-sm btn-warning modalUpdate"
                                         data-clave="<?php echo htmlspecialchars($producto['claveProducto']); ?>"
                                         data-nombre="<?php echo htmlspecialchars($producto['nombreProducto']); ?>"
                                         data-precio="<?php echo htmlspecialchars($producto['precioProducto']); ?>"
                                         data-descripcion="<?php echo htmlspecialchars($producto['descripcion']); ?>">
-                                        <i class="bi bi-pencil"></i> Editar
+                                        <i class="bi bi-pencil"></i>
                                     </button>
                                 </td>
                                 <td>
                                     <form action="backend/productos/delete.php" method="post" style="display:inline;">
                                         <input type="hidden" name="claveProducto" value="<?php echo htmlspecialchars($producto['claveProducto']); ?>">
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este producto?');">
-                                            <i class="bi bi-trash"></i> Eliminar
+                                            <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
                                 </td>

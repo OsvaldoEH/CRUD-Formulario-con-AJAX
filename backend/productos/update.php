@@ -6,14 +6,8 @@ $nombreProducto = $_POST['nombreProducto'];
 $precioProducto = $_POST['precioProducto'];
 $descripcion = $_POST['descripcion'];
 
-$sql = "UPDATE productos 
-        SET nombreProducto='$nombreProducto', 
-            precioProducto=$precioProducto, 
-            descripcion='$descripcion' 
-        WHERE claveProducto='$claveProducto'";
-
-$stmt = $conexion->prepare("UPDATE productos SET nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?");
-$stmt->bind_param("sdss", $nombreProducto, $precioProducto, $descripcion, $claveProducto);
+$stmt = $conexion->prepare("UPDATE productos SET claveProducto=?, nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?");
+$stmt->bind_param("sssd", $claveProducto, $nombreProducto, $precioProducto, $descripcion, $claveProducto);
 
 if (!$stmt->execute()) {
     echo '<script>

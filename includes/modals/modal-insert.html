@@ -13,19 +13,19 @@
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Clave del producto</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1"
-                            placeholder="Clave del producto" name="claveProducto">
+                            placeholder="Clave del producto" name="claveProducto" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput2" class="form-label">Nombre del producto</label>
                         <input type="text" class="form-control" id="exampleFormControlInput2"
-                            placeholder="Nombre del producto" name="nombreProducto">
+                            placeholder="Nombre del producto" name="nombreProducto" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput3" class="form-label">Precio del producto</label>
                         <input type="number" class="form-control" id="exampleFormControlInput3"
-                            placeholder="Precio del producto" name="precioProducto" step="0.01" min="0">
+                            placeholder="Precio del producto" name="precioProducto" step="0.01" min="0" required>
                     </div>
 
                     <div class="mb-3">
@@ -33,9 +33,9 @@
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                             placeholder="Descripción del producto" name="descripcion"></textarea>
                     </div>
-
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Registrar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrars</button>
+                    
                 </form>
 
             </div>
