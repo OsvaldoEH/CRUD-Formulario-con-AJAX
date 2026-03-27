@@ -1,17 +1,19 @@
 <?php
 require_once '../../includes/database/conexion.php';
 
-$claveProducto = $_POST['claveProducto'];
+$claveProducto  = $_POST['claveProducto'];
 $nombreProducto = $_POST['nombreProducto'];
 $precioProducto = $_POST['precioProducto'];
-$descripcion = $_POST['descripcion'];
+$descripcion    = $_POST['descripcion'];
 
-$stmt = $conexion->prepare("UPDATE productos SET claveProducto=?, nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?");
-$stmt->bind_param("sssd", $claveProducto, $nombreProducto, $precioProducto, $descripcion, $claveProducto);
+$stmt = $conexion->prepare(
+    "UPDATE productos SET nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?"
+);
+$stmt->bind_param("sdss", $nombreProducto, $precioProducto, $descripcion, $claveProducto);
 
 if (!$stmt->execute()) {
     echo '<script>
-            alert("❌ Error al actualizar la fila");
+            alert("❌ Error al actualizar la fila: ' . $stmt->error . '");
             window.location.href = "../../index.php?error=1";
           </script>';
     exit();
@@ -20,5 +22,5 @@ if (!$stmt->execute()) {
             alert("✅ Fila actualizada exitosamente");
             window.location.href = "../../index.php";
           </script>';
-    exit(); // Asegura que no se ejecute más código
+    exit();
 }
