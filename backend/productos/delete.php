@@ -1,21 +1,17 @@
 <?php
 require_once '../../includes/database/conexion.php';
 
-$claveProducto = $_POST['claveProducto'];
-$sql = "DELETE FROM productos WHERE claveProducto='$claveProducto'";
+header('Content-Type: application/json');
 
-if (mysqli_query($conexion, $sql)) {
-    echo '<script>
-            alert("✅ Fila eliminada exitosamente");
-            window.location.href = "../../index.php";
-          </script>';
-    exit(); // Asegura que no se ejecute más código    
+$claveProducto = $_POST['claveProducto'] ?? '';
+
+$stmt = $conexion->prepare("DELETE FROM productos WHERE claveProducto=?");
+$stmt->bind_param("s", $claveProducto);
+
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => '✅ Producto eliminado exitosamente']);
 } else {
-    echo '<script>
-            alert("❌ Error al eliminar la fila");
-            window.location.href = "../../index.php?error=1";
-          </script>';
-    exit();
+    echo json_encode(['success' => false, 'message' => '❌ Error al eliminar: ' . $stmt->error]);
 }
 
 ?>

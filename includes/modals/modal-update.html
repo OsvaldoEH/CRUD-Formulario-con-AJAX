@@ -1,46 +1,44 @@
-<!-- Modal -->
+<!-- Modal Update -->
 <div class="modal fade" id="staticBackdrop2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Actualizar Producto</h5>
+                <h5 class="modal-title" id="staticBackdropLabel2">Actualizar Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
 
-                <form action="backend/productos/update.php" method="post">
-                    
+                <form id="formUpdate">
+
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Clave del producto</label>
-                        <input type="text" class="form-control" id="claveProducto" readonly
-                            placeholder="Clave del producto" name="claveProducto" required>
+                        <label class="form-label">Clave del producto</label>
+                        <input type="text" class="form-control" id="claveProducto" name="claveProducto" readonly required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="exampleFormControlInput2" class="form-label">Nombre del producto</label>
-                        <input type="text" class="form-control" id="nombreProducto"
-                            placeholder="Nombre del producto" name="nombreProducto" required>
+                        <label class="form-label">Nombre del producto</label>
+                        <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="exampleFormControlInput3" class="form-label">Precio del producto</label>
-                        <input type="number" class="form-control" id="precioProducto"
-                            placeholder="Precio del producto" name="precioProducto" step="0.01" min="0" required>
+                        <label class="form-label">Precio del producto</label>
+                        <input type="number" class="form-control" id="precioProducto" name="precioProducto" step="0.01" min="0" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Descripción del producto</label>
-                        <textarea class="form-control" id="descripcion" rows="3"
-                            placeholder="Descripción del producto" name="descripcion"></textarea>
+                        <label class="form-label">Descripción del producto</label>
+                        <textarea class="form-control" id="descripcion" rows="3" name="descripcion"></textarea>
                     </div>
 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
                 </form>
 
             </div>
-            <div class="modal-footer">
-            </div>
+            <div class="modal-footer"></div>
+            
         </div>
     </div>
 </div>

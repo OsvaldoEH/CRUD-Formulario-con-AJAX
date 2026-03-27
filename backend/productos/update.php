@@ -1,26 +1,22 @@
 <?php
 require_once '../../includes/database/conexion.php';
 
-$claveProducto  = $_POST['claveProducto'];
-$nombreProducto = $_POST['nombreProducto'];
-$precioProducto = $_POST['precioProducto'];
-$descripcion    = $_POST['descripcion'];
+header('Content-Type: application/json');
+
+$claveProducto  = $_POST['claveProducto']  ?? '';
+$nombreProducto = $_POST['nombreProducto'] ?? '';
+$precioProducto = $_POST['precioProducto'] ?? 0;
+$descripcion    = $_POST['descripcion']    ?? '';
 
 $stmt = $conexion->prepare(
     "UPDATE productos SET nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?"
 );
 $stmt->bind_param("sdss", $nombreProducto, $precioProducto, $descripcion, $claveProducto);
 
-if (!$stmt->execute()) {
-    echo '<script>
-            alert("❌ Error al actualizar la fila: ' . $stmt->error . '");
-            window.location.href = "../../index.php?error=1";
-          </script>';
-    exit();
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => '✅ Producto actualizado exitosamente']);
 } else {
-    echo '<script>
-            alert("✅ Fila actualizada exitosamente");
-            window.location.href = "../../index.php";
-          </script>';
-    exit();
+    echo json_encode(['success' => false, 'message' => '❌ Error al actualizar: ' . $stmt->error]);
 }
+
+?>

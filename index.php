@@ -19,12 +19,11 @@ $productos = obtenerProductos($conexion);
 <body>
     <div class="header">
         <h1 class="fw-bold">CRUD de Productos</h1>
-        <p class="mb-0">Sistema de gestion de inventario</p>
+        <p class="mb-0">Sistema de gestión de inventario</p>
     </div>
 
     <div class="container">
         <div class="list">
-
             <h4>Lista de Tutoriales</h4>
             <ul>
                 <li>Tutorial HTML5</li>
@@ -35,54 +34,52 @@ $productos = obtenerProductos($conexion);
         </div>
 
         <div class="article">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary d-block mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="modalInsert">
+            <button type="button" class="btn btn-primary d-block mb-3" id="modalInsert">
                 Insertar Producto
             </button>
-            <?php if (count($productos) > 0): ?>
-                <table class="table table-striped">
-                    <thead>
+
+            <!-- Tabla con id para actualizarla via JS -->
+            <table class="table table-striped" id="tablaProductos" <?php if (count($productos) === 0) echo 'style="display:none"'; ?>>
+                <thead>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Descripción</th>
+                        <th>Actualizar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($productos as $p): ?>
                         <tr>
-                            <th>Clave del Producto</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Descripción</th>
-                            <th>Actualizar</th>
-                            <th>Eliminar</th>
+                            <td><?= htmlspecialchars($p['claveProducto']) ?></td>
+                            <td><?= htmlspecialchars($p['nombreProducto']) ?></td>
+                            <td>$<?= number_format($p['precioProducto'], 2) ?></td>
+                            <td><?= htmlspecialchars($p['descripcion']) ?></td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning modalUpdate"
+                                    data-clave="<?= htmlspecialchars($p['claveProducto']) ?>"
+                                    data-nombre="<?= htmlspecialchars($p['nombreProducto']) ?>"
+                                    data-precio="<?= htmlspecialchars($p['precioProducto']) ?>"
+                                    data-descripcion="<?= htmlspecialchars($p['descripcion']) ?>">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger btnEliminar"
+                                    data-clave="<?= htmlspecialchars($p['claveProducto']) ?>">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($productos as $producto): ?>
-                            <tr>
-                                <td><?php echo $producto['claveProducto']; ?></td>
-                                <td><?php echo $producto['nombreProducto']; ?></td>
-                                <td><?php echo $producto['precioProducto']; ?></td>
-                                <td><?php echo $producto['descripcion']; ?></td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning modalUpdate"
-                                        data-clave="<?php echo htmlspecialchars($producto['claveProducto']); ?>"
-                                        data-nombre="<?php echo htmlspecialchars($producto['nombreProducto']); ?>"
-                                        data-precio="<?php echo htmlspecialchars($producto['precioProducto']); ?>"
-                                        data-descripcion="<?php echo htmlspecialchars($producto['descripcion']); ?>">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <form action="backend/productos/delete.php" method="post" style="display:inline;">
-                                        <input type="hidden" name="claveProducto" value="<?php echo htmlspecialchars($producto['claveProducto']); ?>">
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este producto?');">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <div class="alert alert-info" role="alert"> No hay productos disponibles.
-                </div>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <div id="sinProductos" class="alert alert-info" <?php if (count($productos) > 0) echo 'style="display:none"'; ?>>
+                No hay productos disponibles.
+            </div>
         </div>
     </div>
 
@@ -90,11 +87,13 @@ $productos = obtenerProductos($conexion);
         <p>Copyright &copy; 2026</p>
     </div>
 
+    <!-- Contenedor donde se inyectan los modales -->
     <div id="modalContainer"></div>
-    <script src="assets/js/modal-insert.js"></script>
-    <script src="assets/js/modal-update.js"></script>
+    <!-- Un solo archivo JS unificado -->
+    <script src="assets/js/crud.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

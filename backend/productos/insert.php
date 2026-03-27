@@ -1,26 +1,23 @@
 <?php
 require_once '../../includes/database/conexion.php';
 
-$claveProducto = $_POST['claveProducto'];
-$nombreProducto = $_POST['nombreProducto'];
-$precioProducto = $_POST['precioProducto'];
-$descripcion = $_POST['descripcion'];
+header('Content-Type: application/json');
 
-$sql = "INSERT INTO productos(claveProducto, nombreProducto, precioProducto, descripcion)
-                     VALUES ('$claveProducto' , '$nombreProducto', $precioProducto, '$descripcion')";
+$claveProducto  = $_POST['claveProducto']  ?? '';
+$nombreProducto = $_POST['nombreProducto'] ?? '';
+$precioProducto = $_POST['precioProducto'] ?? 0;
+$descripcion    = $_POST['descripcion']    ?? '';
 
-if (mysqli_query($conexion, $sql)) {
-    echo '<script>
-            alert("✅ Nueva Fila creada exitosamente");
-            window.location.href = "../../index.php";
-          </script>';
-    exit(); // Asegura que no se ejecute más código    
+$stmt = $conexion->prepare(
+    "INSERT INTO productos (claveProducto, nombreProducto, precioProducto, descripcion) VALUES (?, ?, ?, ?)"
+);
+$stmt->bind_param("ssds", $claveProducto, $nombreProducto, $precioProducto, $descripcion);
+
+if ($stmt->execute()) {
+    echo json_encode(['success' => true, 'message' => '✅ Producto creado exitosamente']);
 } else {
-    echo '<script>
-            alert("❌ Error al crear la fila");
-            window.location.href = "../../index.php?error=1";
-          </script>';
-    exit();
+    echo json_encode(['success' => false, 'message' => '❌ Error al crear el producto: ' . $stmt->error]);
 }
 
 ?>
+    
