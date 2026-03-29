@@ -1,8 +1,8 @@
 <?php
     $servidor = "localhost";
-    $usuario = "root";
-    $clave = "123456A";
-    $base_de_datos = "tienda";
+    $usuario = "u219080452_osvaldo";
+    $clave = "WebHostOsvaldo8=?";
+    $base_de_datos = "u219080452_CRUD_Osvaldo";
 
     $conexion = new mysqli($servidor, $usuario, $clave, $base_de_datos);
 

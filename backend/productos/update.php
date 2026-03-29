@@ -14,9 +14,9 @@ if ($claveProducto === 0) {
 }
 
 $stmt = $conexion->prepare(
-    "UPDATE productos SET claveProducto=?, nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?"
+    "UPDATE productos SET nombreProducto=?, precioProducto=?, descripcion=? WHERE claveProducto=?"
 );
-$stmt->bind_param("isdsi", $claveProducto, $nombreProducto, $precioProducto, $descripcion, $claveProducto);
+$stmt->bind_param("sdsi", $nombreProducto, $precioProducto, $descripcion, $claveProducto);
 
 if ($stmt->execute()) {
     $result = $conexion->query("SELECT claveProducto, nombreProducto, precioProducto, descripcion FROM productos");
